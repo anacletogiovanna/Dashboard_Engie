@@ -67,3 +67,8 @@ body {
     float: right;
 }
 
+.myChart {
+    display: block;
+    height: 50%!important;
+    width: 50%!important;
+}
