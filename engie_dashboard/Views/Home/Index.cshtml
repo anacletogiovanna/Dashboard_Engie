@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="~/js/site.js"></script>
+
 <div class="text-center">
     <h1 class="display-4">Dashboard BI</h1>
-    <p>Graph Example, maybe...</p>
+  
+    <div class="row" style="margin-top:10%;">
+        <canvas id="solicitacoesChart" class="solicitacoesChart"></canvas>
+        <canvas id="tipoSolicitacao" class="tipoSolicitacao"></canvas>
+    </div>
+    
 </div>

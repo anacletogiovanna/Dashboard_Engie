@@ -21,9 +21,9 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Solicitacao.ToListAsync());
+            var solicitacoes = _context.Solicitacao.Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1)).ToListAsync();
+            return View(await solicitacoes);
         }
-
         // GET: Solicitacaos/Details/5
         public async Task<IActionResult> Details(string id)
         {

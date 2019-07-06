@@ -5,15 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using engie_dashboard.Models;
+using Newtonsoft.Json;
 
 namespace engie_dashboard.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ModelContext _context;
+
+        public HomeController(ModelContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
-            var solicitacoes = new Solicitacao();
-            
+
+            var solicitacoes = _context.Solicitacao.ToList().Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1));
+            var countSolicitado = solicitacoes.Count(x => x.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado));
+            var graphJson = JsonConvert.SerializeObject(solicitacoes);
+
             return View();
         }
 
