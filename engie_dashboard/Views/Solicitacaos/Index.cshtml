@@ -1,0 +1,80 @@
+﻿@model IEnumerable<engie_dashboard.Models.Solicitacao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Dashboard das últimas 24hrs</h1>
+
+<p>
+    @*<a asp-action="Create">Create New</a>*@
+</p>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr style="text-align:center;">
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.TipoSolicitacao)*@
+                        Tipo de Solicitação
+                    </th>
+                    <th>
+                        Usina
+                    </th>
+                    <th>
+                        UG
+                    </th>
+                    <th>
+                        Hora Solicitação
+                    </th>
+                    <th>
+                        Valor
+                    </th>
+                    <th>
+                        Unidade
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Estado Operacional
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="text-align:center;">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoSolicitacao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usina)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.HoraSolicitacao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Valor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnidadeMedida)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstadoOperacional)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
