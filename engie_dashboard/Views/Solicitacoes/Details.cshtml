@@ -1,0 +1,161 @@
+﻿@model engie_dashboard.Models.Solicitacao
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h4>Detalhes</h4>
+<hr />
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tipo de Solicitação
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TipoSolicitacao)
+        </dd>
+        <dt class="col-sm-2">
+            Data de Criação
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Usina)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Usina)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UG)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UG)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Solicitante)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Solicitante.NomeCompleto (@Model.Solicitante.Empresa)
+        </dd>
+        @if (!string.IsNullOrEmpty(Model.OperadorId))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Operador)
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Operador.NomeCompleto (@Model.Operador.Empresa)
+            </dd>
+        }
+        @if (!string.IsNullOrEmpty(Model.EncaminhadoId))
+        {
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Encaminhado)
+            </dt>
+            <dd class="col-sm-10">
+                Model.Encaminhado.NomeCompleto (@Model.Encaminhado.Empresa)
+            </dd>
+        }
+
+        <dt class="col-sm-2">
+            Status da Solicitação
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StatusSolicitacao)
+        </dd>
+
+        @if (Model.TipoSolicitacao.Equals(TipoSolicitacaoEnum.MudancaEstado))
+        {
+            <dt class="col-sm-2">
+                Estado Operacional
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.EstadoOperacional)
+            </dd>
+        }
+
+        @if (Model.TipoSolicitacao.Equals(TipoSolicitacaoEnum.ComandosTensaoPotencia))
+        {
+            <dt class="col-sm-2">
+                Comando de Potência
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.ComandoDePotencia)
+            </dd>
+            <dt class="col-sm-2">
+                Tipo de Potência
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TipoDePotencia)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Valor)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Valor)
+            </dd>
+            <dt class="col-sm-2">
+                Unidade de Medida
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.UnidadeMedida)
+            </dd>
+        }
+        @if (Model.TipoSolicitacao.Equals(TipoSolicitacaoEnum.Hidrologia))
+        {
+            <dt class="col-sm-2">
+                Precipitação
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Precipitacao)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Chuva)
+            </dt>
+            @if (@Model.Chuva == true)
+            {
+                <dd class="col-sm-10">Sim</dd>
+            }
+            else
+            {
+                <dd class="col-sm-10">Não</dd>
+            }
+            <dt class="col-sm-2">
+                Nível de Reservatório(m)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NivelDeReservatorio)
+            </dd>
+            <dt class="col-sm-2">
+                Vazão Afluente
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VazaoAfluente)
+            </dd>
+            <dt class="col-sm-2">
+                Vazão Vertidas(m³/s)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VazaoVertida)
+            </dd>
+            <dt class="col-sm-2">
+                Vazão Turbinada
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VazaoTurbinada)
+            </dd>
+            <dt class="col-sm-2">
+                Vazão Defluente
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.VazaoDefluente)
+            </dd>
+        }
+
+    </dl>
+</div>
+<div class="col-md-3">
+    <a class="btn btn-primary" style="margin-top: 11%;" asp-action="Index"> < Voltar</a>
+</div>
