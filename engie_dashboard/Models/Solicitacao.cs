@@ -120,10 +120,10 @@ namespace engie_dashboard.Models
     public enum TipoDePotenciaEnum
     {
         [Display(Name = "Tensão")]
-        Aumentar = 0,
+        Tensao = 0,
 
         [Display(Name = "Potência")]
-        Diminuir = 1,
+        Potencia = 1,
     }
 
     #endregion
