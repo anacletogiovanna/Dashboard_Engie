@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Framework.CrossCutting.Tools.Enum;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -40,90 +41,112 @@ namespace engie_dashboard.Models
     [Flags]
     public enum TipoSolicitacaoEnum
     {
-        [Display(Name = "Mudança de Estado")]
+        [EnumText("Mudança de Estado")]
+        [EnumValue("0")]
         MudancaEstado = 0,
 
-        [Display(Name = "Comandos de Tensão e Potência")]
+        [EnumText("Comandos de Tensão e Potência")]
+        [EnumValue("1")]
         ComandosTensaoPotencia = 1,
 
-        [Display(Name = "Hidrologia")]
+        [EnumText("Hidrologia")]
+        [EnumValue("2")]
         Hidrologia = 2,
 
-        [Display(Name = "Exceção")]
-        Excecao = 3
+        //[EnumText("Exceção")]
+        //[EnumValue("3")]
+        //Excecao = 3
     }
 
     [Flags]
     public enum StatusSolicitacaoEnum
     {
-        [Display(Name = "Solicitado")]
+        [EnumText("Solicitado")]
+        [EnumValue("0")]
         Solicitado = 0,
 
-        [Display(Name = "Confirmado")]
+        [EnumText("Confirmado")]
+        [EnumValue("1")]
         Confirmado = 1,
 
-        [Display(Name = "Executado")]
+        [EnumText("Executado")]
+        [EnumValue("2")]
         Executado = 2,
 
-        [Display(Name = "Encaminhado")]
+        [EnumText("Encaminhado")]
+        [EnumValue("3")]
         Encaminhado = 3,
 
-        [Display(Name = "Rejeitado")]
+        [EnumText("Rejeitado")]
+        [EnumValue("4")]
         Rejeitado = 4,
 
-        [Display(Name = "Informado")]
+        [EnumText("Informado")]
+        [EnumValue("5")]
         Informado = 5,
     }
 
     [Flags]
     public enum EstadoOperacionalEnum
     {
-
-        [Display(Name = "Disponível Compensador Sistema")]
+        [EnumText("Disponível Compensador Sistema")]
+        [EnumValue("0")]
         DCS = 0,
 
-        [Display(Name = "Disponível Gerando Normal")]
+        [EnumText("Disponível Gerando Normal")]
+        [EnumValue("1")]
         DGN = 1,
 
-        [Display(Name = "Disponível Gerando Teste")]
+        [EnumText("Disponível Gerando Teste")]
+        [EnumValue("2")]
         DGT = 2,
 
-        [Display(Name = "Disponível Parado")]
+        [EnumText("Disponível Parado")]
+        [EnumValue("3")]
         DP = 3,
 
-        [Display(Name = "Disponível Partida Caldeira Quente")]
+        [EnumText("Disponível Partida Caldeira Quente")]
+        [EnumValue("4")]
         DPCQ = 4,
 
-        [Display(Name = "Disponível Partida Turbina Quente")]
+        [EnumText("Disponível Partida Turbina Quente")]
+        [EnumValue("5")]
         DPTQ = 5,
 
-        [Display(Name = "Indisponível Gerando Programada")]
+        [EnumText("Indisponível Gerando Programada")]
+        [EnumValue("6")]
         IGP = 6,
 
-        [Display(Name = "Indisponível Parada Intempestiva")]
+        [EnumText("Indisponível Parada Intempestiva")]
+        [EnumValue("7")]
         IPI = 7,
 
-        [Display(Name = "Indisponível Parada Programada")]
+        [EnumText("Indisponível Parada Programada")]
+        [EnumValue("8")]
         IPP = 8,
     }
 
     [Flags]
     public enum ComandoDePotenciaEnum
     {
-        [Display(Name = "Aumentar")]
+        [EnumText("Aumentar")]
+        [EnumValue("0")]
         Aumentar = 0,
 
-        [Display(Name = "Diminuir")]
+        [EnumText("Diminuir")]
+        [EnumValue("1")]
         Diminuir = 1,
     }
 
     [Flags]
     public enum TipoDePotenciaEnum
     {
-        [Display(Name = "Tensão")]
+        [EnumText("Tensão")]
+        [EnumValue("0")]
         Aumentar = 0,
 
-        [Display(Name = "PotÊncia")]
+        [EnumText("Potência")]
+        [EnumValue("1")]
         Diminuir = 1,
     }
 

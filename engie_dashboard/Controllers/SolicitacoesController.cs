@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using engie_dashboard.Models;
+using Framework.CrossCutting.Tools.Enum;
 
 namespace engie_dashboard.Controllers
 {
@@ -19,14 +20,7 @@ namespace engie_dashboard.Controllers
         }
 
         // GET: Solicitacaos
-        public async Task<IActionResult> Index()
-        {
-            var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToListAsync();
-            return View(await solicitacoes);
-        }
-
-        // GET: Solicitacaos
-        public IActionResult Dashboard()
+        public IActionResult Index()
         {
             var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToList();
             foreach (var item in solicitacoes)
@@ -40,20 +34,39 @@ namespace engie_dashboard.Controllers
             return View(solicitacoes);
         }
 
+        // GET: Solicitacaos
+        public IActionResult Dashboard()
+        {
+            var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToList();
+            foreach (var item in solicitacoes)
+            {
+                item.Solicitante = _context.Usuario.Find(item.SolicitanteId);
+                if (!string.IsNullOrEmpty(item.OperadorId))
+                    item.Operador = _context.Usuario.Find(item.OperadorId);
+                if (!string.IsNullOrEmpty(item.EncaminhadoId))
+                    item.Encaminhado = _context.Usuario.Find(item.EncaminhadoId);
+            }
+            return View(solicitacoes);
+        }
+
         // GET: Solicitacaos/Details/5
-        public async Task<IActionResult> Details(string id)
+        public IActionResult Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var solicitacao = await _context.Solicitacao
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var solicitacao = _context.Solicitacao.FirstOrDefault(m => m.Id == id);
             if (solicitacao == null)
             {
                 return NotFound();
             }
+            solicitacao.Solicitante = _context.Usuario.Find(solicitacao.SolicitanteId);
+            if (!string.IsNullOrEmpty(solicitacao.OperadorId))
+                solicitacao.Operador = _context.Usuario.Find(solicitacao.OperadorId);
+            if (!string.IsNullOrEmpty(solicitacao.EncaminhadoId))
+                solicitacao.Encaminhado = _context.Usuario.Find(solicitacao.EncaminhadoId);
 
             return View(solicitacao);
         }
@@ -61,23 +74,43 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos/Create
         public IActionResult Create()
         {
+            var UsuarioLogado = User.Identity.Name.Split("@")[0];
+            string idCl;
+            if (UsuarioLogado.Equals("Pedro"))
+                idCl = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
+            else
+                idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
+            
+            var teste = User.Identity.Name;
+            ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            ViewBag.EstadoOperacional = EnumHelper.ToList<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
+            ViewBag.ComandoDePotencia = EnumHelper.ToList<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            ViewBag.TipoDePotencia = EnumHelper.ToList<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+
             return View();
         }
 
         // POST: Solicitacaos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,TipoSolicitacao,Usina,UG,HoraSolicitacao,Valor,UnidadeMedida,OperadorId,VerificadorId,EncaminhadoId,StatusSolicitacao,EstadoOperacional")] Solicitacao solicitacao)
+        public IActionResult Create(Solicitacao solicitacao)
         {
             if (ModelState.IsValid)
             {
+                solicitacao.Id = new Guid().ToString();
+                solicitacao.Data = DateTime.Now;
+                //TODO: Eliz - Preparar login/logout
+                var UsuarioLogado = User.Identity.Name.Split("@")[0];
+                if (UsuarioLogado.Equals("Pedro"))
+                    solicitacao.SolicitanteId = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
+                else
+                    solicitacao.SolicitanteId = "C004750C-B424-4CC3-80F6-34F3ED52860C";
                 _context.Add(solicitacao);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(solicitacao);
+            return View("Index");
         }
 
         // GET: Solicitacaos/Edit/5

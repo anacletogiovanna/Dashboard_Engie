@@ -1,82 +1,167 @@
 ﻿@model engie_dashboard.Models.Solicitacao
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Abrir Solicitação";
 }
 
-<h1>Create</h1>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#TipoSolicitacao").on("change", function () {
+            var tipo = $("#TipoSolicitacao").val();
+            if (tipo === "0") {
+                $('#divEstadoOperacional').val('').show();
+                $('#divPrecipitacao').val('').hide();
+                $('#divChuva').val('').hide();
+                $('#divNivelDeReservatorio').val('').hide();
+                $('#divVazaoAfluente').val('').hide();
+                $('#divVazaoVertida').val('').hide();
+                $('#divVazaoTurbinada').val('').hide();
+                $('#divVazaoDefluente').val('').hide();
+                $('#divComandoDePotencia').val('').hide();
+                $('#divTipoDePotencia').val('').hide();
+                $('#divValor').val('').hide();
+                $('#divUnidadeMedida').val('').hide();
+            }
+            else if (tipo === "1") {
+                $('#divEstadoOperacional').val('').hide();
+                $('#divPrecipitacao').val('').hide();
+                $('#divChuva').val('').hide();
+                $('#divNivelDeReservatorio').val('').hide();
+                $('#divVazaoAfluente').val('').hide();
+                $('#divVazaoVertida').val('').hide();
+                $('#divVazaoTurbinada').val('').hide();
+                $('#divVazaoDefluente').val('').hide();
+                $('#divComandoDePotencia').val('').show();
+                $('#divTipoDePotencia').val('').show();
+                $('#divValor').val('').show();
+                $('#divUnidadeMedida').val('').show();
+            }
+            else if (tipo === "2") {
+                $('#divEstadoOperacional').val('').hide();
+                $('#divComandoDePotencia').val('').hide();
+                $('#divTipoDePotencia').val('').hide();
+                $('#divValor').val('').hide();
+                $('#divUnidadeMedida').val('').hide();
+                $('#divPrecipitacao').val('').show();
+                $('#divChuva').val('').show();
+                $('#divNivelDeReservatorio').val('').show();
+                $('#divVazaoAfluente').val('').show();
+                $('#divVazaoVertida').val('').show();
+                $('#divVazaoTurbinada').val('').show();
+                $('#divVazaoDefluente').val('').show();
+            }
+        });
+    });
+</script>
 
-<h4>Solicitacao</h4>
+<h4>Abrir Solicitação</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TipoSolicitacao" class="control-label"></label>
-                @*<input asp-for="TipoSolicitacao" class="form-control" />*@
-                @*@Html.DropDownList("TipoSolicitacao", EnumHelper.TipoSolicitacaoEnum)*@
-                <span asp-validation-for="TipoSolicitacao" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Usina" class="control-label"></label>
                 <input asp-for="Usina" class="form-control" />
                 <span asp-validation-for="Usina" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="UG" class="control-label"></label>
                 <input asp-for="UG" class="form-control" />
                 <span asp-validation-for="UG" class="text-danger"></span>
             </div>
-            @*<div class="form-group">
-                <label asp-for="HoraSolicitacao" class="control-label"></label>
-                <input asp-for="HoraSolicitacao" class="form-control" />
-                <span asp-validation-for="HoraSolicitacao" class="text-danger"></span>
-            </div>*@
+
             <div class="form-group">
+                <label>Tipo de Solicitação</label>
+                @Html.DropDownListFor(x => x.TipoSolicitacao, new SelectList(ViewBag.TipoSolicitacao, "Value", "Text"), "Select", new { @id = "TipoSolicitacao", @class = "form-control" })
+            </div>
+
+            <div id="divEstadoOperacional" class="form-group">
+                <label>Estado Operacional</label>
+                @Html.DropDownListFor(x => x.EstadoOperacional, new SelectList(ViewBag.EstadoOperacional, "Value", "Text"), "Select", new { @id = "EstadoOperacional", @class = "form-control" })
+            </div>
+
+            <div id="divComandoDePotencia" class="form-group">
+                <label>Comando de Potência</label>
+                @Html.DropDownListFor(x => x.ComandoDePotencia, new SelectList(ViewBag.ComandoDePotencia, "Value", "Text"), "Select", new { @id = "ComandoDePotencia", @class = "form-control" })
+            </div>
+
+            <div id="divTipoDePotencia" class="form-group">
+                <label>Tipo de Potência</label>
+                @Html.DropDownListFor(x => x.TipoDePotencia, new SelectList(ViewBag.TipoDePotencia, "Value", "Text"), "Select", new { @id = "TipoDePotencia", @class = "form-control" })
+            </div>
+
+            <div id="divValor" class="form-group">
                 <label asp-for="Valor" class="control-label"></label>
-                <input asp-for="Valor" class="form-control" type="number" min="1"/>
+                <input type="number" asp-for="Valor" class="form-control" />
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UnidadeMedida" class="control-label"></label>
+
+            <div id="divUnidadeMedida" class="form-group">
+                <label>Unidade de Medida</label>
                 <input asp-for="UnidadeMedida" class="form-control" />
                 <span asp-validation-for="UnidadeMedida" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="OperadorId" class="control-label"></label>
-                <input asp-for="OperadorId" class="form-control" />
-                <span asp-validation-for="OperadorId" class="text-danger"></span>
+
+            <div id="divPrecipitacao" class="form-group">
+                <label>Precipitação</label>
+                <input type="number" asp-for="Precipitacao" class="form-control" />
+                <span asp-validation-for="Precipitacao" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="OperadorId" class="control-label"></label>
-                <input asp-for="OperadorId" class="form-control" />
-                <span asp-validation-for="OperadorId" class="text-danger"></span>
+
+            <div id="divChuva" class="form-group">
+                <label>Chuva</label>
+                @Html.RadioButtonFor(model => model.Chuva, "Sim", true) @Html.Label("Sim")
+                @Html.RadioButtonFor(model => model.Chuva, "Não", false) @Html.Label("Não")
             </div>
-            <div class="form-group">
-                <label asp-for="EncaminhadoId" class="control-label"></label>
-                <input asp-for="EncaminhadoId" class="form-control" />
-                <span asp-validation-for="EncaminhadoId" class="text-danger"></span>
+
+            <div id="divNivelDeReservatorio" class="form-group">
+                <label>Nível de Reservatório</label>
+                <input type="number" asp-for="NivelDeReservatorio" class="form-control" />
+                <span asp-validation-for="NivelDeReservatorio" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StatusSolicitacao" class="control-label"></label>
-                <select asp-for="StatusSolicitacao" class="form-control"></select>
-                <span asp-validation-for="StatusSolicitacao" class="text-danger"></span>
+
+            <div id="divVazaoAfluente" class="form-group">
+                <label>Vazão Afluente</label>
+                <input type="number" asp-for="VazaoAfluente" class="form-control" />
+                <span asp-validation-for="VazaoAfluente" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="EstadoOperacional" class="control-label"></label>
-                <select asp-for="EstadoOperacional" class="form-control"></select>
-                <span asp-validation-for="EstadoOperacional" class="text-danger"></span>
+
+            <div id="divVazaoVertida" class="form-group">
+                <label>Vazão Vertida</label>
+                <input type="number" asp-for="VazaoVertida" class="form-control" />
+                <span asp-validation-for="VazaoVertida" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+
+            <div id="divVazaoTurbinada" class="form-group">
+                <label>Vazão Turbinada</label>
+                <input type="number" asp-for="VazaoTurbinada" class="form-control" />
+                <span asp-validation-for="VazaoTurbinada" class="text-danger"></span>
             </div>
+
+            <div id="divVazaoDefluente" class="form-group">
+                <label>Vazão Defluente</label>
+                <input type="number" asp-for="VazaoDefluente" class="form-control" />
+                <span asp-validation-for="VazaoDefluente" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Registrar" class="btn btn-primary" />
+            </div>
+
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"> < Voltar</a>
 </div>
 
 @section Scripts {
