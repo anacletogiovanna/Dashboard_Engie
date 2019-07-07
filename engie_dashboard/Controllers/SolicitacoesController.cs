@@ -73,12 +73,12 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos/Create
         public IActionResult Create()
         {
-            var UsuarioLogado = User.Identity.Name.Split("@")[0];
+            //var UsuarioLogado = User.Identity.Name.Split("@")[0];
             string idCl;
-            if (UsuarioLogado.Equals("Pedro"))
-                idCl = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
-            else
-                idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
+            //if (UsuarioLogado.Equals("Pedro"))
+            //    idCl = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
+            //else
+            //    idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
             
             var teste = User.Identity.Name;
             //ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
