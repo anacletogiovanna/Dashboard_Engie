@@ -54,7 +54,7 @@ namespace engie_dashboard.Controllers
             var UsuarioLogado = User.Identity.Name.Split("@")[0];
             ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
 
-            return View(solicitacoes);
+            return View(solicitacoes.OrderByDescending(x => x.Data));
         }
 
         // GET: Solicitacaos
@@ -69,7 +69,7 @@ namespace engie_dashboard.Controllers
                 if (!string.IsNullOrEmpty(item.EncaminhadoId))
                     item.Encaminhado = _context.Usuario.Find(item.EncaminhadoId);
             }
-            return View(solicitacoes);
+            return View(solicitacoes.OrderByDescending(x => x.Data));
         }
 
         // GET: Solicitacaos/Details/5
