@@ -19,9 +19,29 @@ namespace engie_dashboard.Controllers
         }
 
         // GET: Solicitacaos
-        public IActionResult Index()
+        public IActionResult Index(string usina, string statussol, string usuario, DateTime? data)
         {
-            var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToList();
+            var solicitacoes = _context.Solicitacao.ToList();
+
+            if (data != null)
+            {
+                data = data.Value.Date;
+                var fim = data.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59);
+                solicitacoes = solicitacoes.Where(x => x.Data >= data && x.Data <= fim).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(usina))
+                solicitacoes = solicitacoes.Where(x => x.Usina.Contains(usina)).ToList();
+
+            if (!string.IsNullOrEmpty(usuario))
+                solicitacoes = solicitacoes.Where(x => x.SolicitanteId.Contains(usuario)).ToList();
+
+            if (!string.IsNullOrEmpty(statussol))
+            {
+                solicitacoes = solicitacoes.Where(x => x.StatusSolicitacao.ToString()
+                .Equals(Enum.GetName(typeof(StatusSolicitacaoEnum), int.Parse(statussol)))).ToList();
+            }
+
             foreach (var item in solicitacoes)
             {
                 item.Solicitante = _context.Usuario.Find(item.SolicitanteId);
@@ -30,6 +50,10 @@ namespace engie_dashboard.Controllers
                 if (string.IsNullOrEmpty(item.EncaminhadoId))
                     item.Encaminhado = _context.Usuario.Find(item.EncaminhadoId);
             }
+
+            var UsuarioLogado = User.Identity.Name.Split("@")[0];
+            ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
+
             return View(solicitacoes);
         }
 
@@ -73,20 +97,6 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos/Create
         public IActionResult Create()
         {
-            var UsuarioLogado = User.Identity.Name.Split("@")[0];
-            string idCl;
-            if (UsuarioLogado.Equals("Pedro"))
-                idCl = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
-            else
-                idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
-            
-            var teste = User.Identity.Name;
-            //ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.EstadoOperacional = EnumHelper.ToList<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
-            //ViewBag.ComandoDePotencia = EnumHelper.ToList<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.TipoDePotencia = EnumHelper.ToList<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-
             return View();
         }
 
