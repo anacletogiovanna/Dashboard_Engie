@@ -98,9 +98,8 @@ namespace engie_dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                solicitacao.Id = new Guid().ToString();
+                solicitacao.Id = Guid.NewGuid().ToString();
                 solicitacao.Data = DateTime.Now;
-                //TODO: Eliz - Preparar login/logout
                 var UsuarioLogado = User.Identity.Name.Split("@")[0];
                 if (UsuarioLogado.Equals("Pedro"))
                     solicitacao.SolicitanteId = "AF5D235F-AA87-4550-9C50-1C1D714861F2";

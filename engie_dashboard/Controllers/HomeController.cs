@@ -21,7 +21,14 @@ namespace engie_dashboard.Controllers
         {
 
             var solicitacoes = _context.Solicitacao.ToList();
-
+            foreach (var item in solicitacoes)
+            {
+                item.Solicitante = _context.Usuario.Find(item.SolicitanteId);
+                if (!string.IsNullOrEmpty(item.OperadorId))
+                    item.Operador = _context.Usuario.Find(item.OperadorId);
+                if (!string.IsNullOrEmpty(item.EncaminhadoId))
+                    item.Encaminhado = _context.Usuario.Find(item.EncaminhadoId);
+            }
             //var graphJson = JsonConvert.SerializeObject(solicitacoes);
 
             //var pieChart = GraphStatusSolicitacao(solicitacoes);
@@ -36,7 +43,6 @@ namespace engie_dashboard.Controllers
             //var solicitacoes = _context.Solicitacao.ToList().Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1));
 
             var solicitacoes = _context.Solicitacao.ToList().Where(x => x.Data >= DateTime.Now.Date.AddDays(-1));
-
             var countSolicitado = solicitacoes.Count(x => x.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado));
 
             //var graphJson = JsonConvert.SerializeObject(solicitacoes);

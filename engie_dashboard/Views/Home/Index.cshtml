@@ -47,10 +47,10 @@
                         Usina
                     </th>
                     <th scope="col">
-                        Valor
+                        Tipo de Solicitação
                     </th>
                     <th scope="col">
-                        Unidade
+                        Solicitante
                     </th>
                     <th scope="col">
                         Status
@@ -61,48 +61,53 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr style="text-align:center;">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Data)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Usina)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Valor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.UnidadeMedida)
-                        </td>
+                <tr style="text-align:center;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usina)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoSolicitacao)
+                    </td>
+                    <td>
+                        @item.Solicitante.NomeCompleto (@item.Solicitante.Empresa)
+                    </td>
 
-                        @if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado))
-                        {
-                            <td style="color:cornflowerblue;">
-                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
-                            </td>
-                        }
-                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Encaminhado))
-                        {
-                            <td style="color:deepskyblue;">
-                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
-                            </td>
-                        }
-                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Executado))
-                        {
-                            <td style="color:yellow;">
-                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
-                            </td>
-                        }
-                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Confirmado))
-                        {
-                            <td style="color:lightgreen;">
-                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
-                            </td>
-                        }
+                    @if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado))
+                    {
+                        <td style="color:cornflowerblue;">
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                    }
+                    else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Encaminhado))
+                    {
+                        <td style="color:deepskyblue;">
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                    }
+                    else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Executado))
+                    {
+                        <td style="color:yellow;">
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                    }
+                    else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Confirmado))
+                    {
+                        <td style="color:lightgreen;">
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                    }
+                    @if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Informado))
+                    {
+                        <td style="color:darkgrey">
+                            @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                        </td>
+                    }
 
 
-
-                    </tr>
+                </tr>
                 }
             </tbody>
         </table>
