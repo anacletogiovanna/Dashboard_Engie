@@ -5,7 +5,7 @@
             console.log("{" + solicitacoes[item] + ":" + solicitacoes[0] +  "}");
         });
 
-        console.log(solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1]);
+        console.log(solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1] );
         var count_label = 0;
         var count_values = 0;
         var ctx = document.getElementById('tipoSolicitacao').getContext('2d');
