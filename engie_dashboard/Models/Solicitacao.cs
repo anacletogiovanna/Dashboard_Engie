@@ -6,7 +6,7 @@ namespace engie_dashboard.Models
 {
     public class Solicitacao
     {
-        public string Id { get; set; } = new Guid().ToString();
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public TipoSolicitacaoEnum TipoSolicitacao { get; set; }
         public DateTime Data{ get; set; }
         public EstadoOperacionalEnum? EstadoOperacional { get; set; }

@@ -2,6 +2,12 @@
 
 @{
     ViewData["Title"] = "Abrir Solicitação";
+
+        IList<SelectListItem> listEstadoOperacionalEnum = Enum.GetValues(typeof(EstadoOperacionalEnum)).Cast<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+        IList<SelectListItem> listTipoSolicitacaoEnum = Enum.GetValues(typeof(TipoSolicitacaoEnum)).Cast<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+        IList<SelectListItem> listComandoDePotenciaEnum = Enum.GetValues(typeof(ComandoDePotenciaEnum)).Cast<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+        IList<SelectListItem> listTipoDePotenciaEnum = Enum.GetValues(typeof(TipoDePotenciaEnum)).Cast<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+
 }
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -9,11 +15,13 @@
         crossorigin="anonymous"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#TipoSolicitacao").on("change",  "input[name='TipoSolicitacao']:checked", function () {
+
+
+
+
+        $("#TipoSolicitacao").on("change", function () {
             var tipo = $("#TipoSolicitacao").val();
             if (tipo === "0") {
-                var radioValue = $("input[name='TipoSolicitacao']:checked").val();
-                console.log(radioValue);
                 $('#divEstadoOperacional').val('').show();
                 $('#divPrecipitacao').val('').hide();
                 $('#divChuva').val('').hide();
@@ -62,173 +70,108 @@
 <h4>Abrir Solicitação</h4>
 <hr />
 
-<form asp-action="Create">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <div class="row">
+    <form asp-action="Create">
         <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
                 <label asp-for="Usina" class="control-label"></label>
                 <input asp-for="Usina" class="form-control" />
                 <span asp-validation-for="Usina" class="text-danger"></span>
             </div>
-        </div>
-        <div class="col-md-6">
+
             <div class="form-group">
                 <label asp-for="UG" class="control-label"></label>
                 <input asp-for="UG" class="form-control" />
                 <span asp-validation-for="UG" class="text-danger"></span>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
+            <div class="form-group">
+                <label>Tipo de Solicitação</label>
+                @Html.DropDownListFor(x => x.TipoSolicitacao, new SelectList(listTipoSolicitacaoEnum, "Value", "Text"), "Select", new { @id = "TipoSolicitacao", @class = "form-control" })
+            </div>
+
+            <div id="divEstadoOperacional" class="form-group">
+                <label>Estado Operacional</label>
+                @Html.DropDownListFor(x => x.EstadoOperacional, new SelectList(listEstadoOperacionalEnum, "Value", "Text"), "Select", new { @id = "EstadoOperacional", @class = "form-control" })
+            </div>
+
+            <div id="divComandoDePotencia" class="form-group">
+                <label>Comando de Potência</label>
+                @Html.DropDownListFor(x => x.ComandoDePotencia, new SelectList(listComandoDePotenciaEnum, "Value", "Text"), "Select", new { @id = "ComandoDePotencia", @class = "form-control" })
+            </div>
+
+            <div id="divTipoDePotencia" class="form-group">
+                <label>Tipo de Potência</label>
+                @Html.DropDownListFor(x => x.TipoDePotencia, new SelectList(listTipoDePotenciaEnum, "Value", "Text"), "Select", new { @id = "TipoDePotencia", @class = "form-control" })
+            </div>
+        </div>
         <div class="col-md-6">
-            <label>Tipo de Solicitação:</label>
+            <div id="divValor" class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input type="number" asp-for="Valor" class="form-control" />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+
+            <div id="divUnidadeMedida" class="form-group">
+                <label>Unidade de Medida</label>
+                <input asp-for="UnidadeMedida" class="form-control" />
+                <span asp-validation-for="UnidadeMedida" class="text-danger"></span>
+            </div>
+
+            <div id="divPrecipitacao" class="form-group">
+                <label>Precipitação</label>
+                <input type="number" asp-for="Precipitacao" class="form-control" />
+                <span asp-validation-for="Precipitacao" class="text-danger"></span>
+            </div>
+
+            <div id="divChuva" class="form-group">
+                <label>Chuva</label>
+                @Html.RadioButtonFor(model => model.Chuva, "Sim", true) @Html.Label("Sim")
+                @Html.RadioButtonFor(model => model.Chuva, "Não", false) @Html.Label("Não")
+            </div>
+
+            <div id="divNivelDeReservatorio" class="form-group">
+                <label>Nível de Reservatório</label>
+                <input type="number" asp-for="NivelDeReservatorio" class="form-control" />
+                <span asp-validation-for="NivelDeReservatorio" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoAfluente" class="form-group">
+                <label>Vazão Afluente</label>
+                <input type="number" asp-for="VazaoAfluente" class="form-control" />
+                <span asp-validation-for="VazaoAfluente" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoVertida" class="form-group">
+                <label>Vazão Vertida</label>
+                <input type="number" asp-for="VazaoVertida" class="form-control" />
+                <span asp-validation-for="VazaoVertida" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoTurbinada" class="form-group">
+                <label>Vazão Turbinada</label>
+                <input type="number" asp-for="VazaoTurbinada" class="form-control" />
+                <span asp-validation-for="VazaoTurbinada" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoDefluente" class="form-group">
+                <label>Vazão Defluente</label>
+                <input type="number" asp-for="VazaoDefluente" class="form-control" />
+                <span asp-validation-for="VazaoDefluente" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
-                <div class="radio-inline">
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.MudancaEstado, true)
-                        Mudança de Estado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.ComandosTensaoPotencia, true)
-                        Tensão/Potência
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.Hidrologia, true)
-                        Hidrologia
-                    </label>
-                </div>
+                <input type="submit" value="Registrar" class="btn btn-primary" />
             </div>
         </div>
+    </form>
 
-        <div id="divEstadoOperacional" class="col-md-6">
-            <label>Estado Operacional:</label>
-            <div class="form-group">
-                <div class="radio-inline">
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DCS, true)
-                        DCS
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DGN, false)
-                        DGN
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DGT, false)
-                        DGT
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DP, false)
-                        DP
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DPCQ, false)
-                        DPCQ
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DPTQ, false)
-                        DPTQ
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IGP, false)
-                        IGP
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IPI, false)
-                        IPI
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IPP, false)
-                        IPP
-                    </label>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="row">
-
-        <div id="divComandoDePotencia" class="col-md-6">
-            <label>Comando de Potencia:</label>
-            <div class="form-group">
-                <div class="radio-inline">
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.ComandoDePotencia, ComandoDePotenciaEnum.Aumentar, false)
-                        Aumentar
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.ComandoDePotencia, ComandoDePotenciaEnum.Diminuir, false)
-                        Diminuir
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div id="divTipoDePotencia" class="col-md-6">
-            <label>Tipo de Potencia:</label>
-            <div class="form-group">
-                <div class="radio-inline">
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.TipoDePotencia, TipoDePotenciaEnum.Tensao, false)
-                        Tensão
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.TipoDePotencia, TipoDePotenciaEnum.Potencia, false)
-                        Potência
-                    </label>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="row">
-
-        <div id="divStatusSolicitacao" class="col-md-6">
-            <label>Status da Solicitação:</label>
-            <div class="form-group">
-                <div class="radio-inline">
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Solicitado, false)
-                        Solicitado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Confirmado, false)
-                        Confirmado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Executado, false)
-                        Executado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Encaminhado, false)
-                        Encaminhado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Rejeitado, false)
-                        Rejeitado
-                    </label>
-                    <label class="btn btn-primary active">
-                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Informado, false)
-                        Informado
-                    </label>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="form-group float-right">
-        <input type="submit" value="Registrar" class="btn btn-primary" />
-    </div>
-    
-
-</form>
-
-<div class="clearfix">
+<div>
     <a asp-action="Index"> < Voltar</a>
 </div>
+
+@section Scripts {
+@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
