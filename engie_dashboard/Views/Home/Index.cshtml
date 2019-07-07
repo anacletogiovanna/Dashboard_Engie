@@ -8,23 +8,21 @@
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
 
-
 <div class="text-center">
     <h1 class="display-4">Dashboard BI</h1>
 
     <div class="row" style="margin-top:5%;">
         <div class="col">
-            <h4>Solicitações - 24 hrs</h4>
+            <h4>Solicitações - 24 hrs(Por Usina)</h4>
         </div>
         <div class="col">
             <h4>Tipos de Solicitações</h4>
         </div>
     </div>
-    <div class="row" id="trendChart" style="margin-top:6%;">
+    <div class="row" id="trendChart" style="margin-top:4%;">
         <canvas id="myChart" class="myChart"></canvas>
         <canvas id="tipoSolicitacao" class="tipoSolicitacao"></canvas>
     </div>
-
 
     <div class="row" style="margin-top:5%;>
         <div class="col"></div>
@@ -55,7 +53,6 @@
                     <th scope="col">
                         Status
                     </th>
-
                 </tr>
             </thead>
             <tbody>
@@ -89,7 +86,7 @@
                     }
                     else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Executado))
                     {
-                        <td style="color:yellow;">
+                        <td style="color:yellowgreen;">
                             @Html.DisplayFor(modelItem => item.StatusSolicitacao)
                         </td>
                     }
