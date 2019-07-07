@@ -143,6 +143,13 @@ namespace engie_dashboard.Controllers
             }
 
             var solicitacao = await _context.Solicitacao.FindAsync(id);
+
+            solicitacao.Solicitante = _context.Usuario.Find(solicitacao.SolicitanteId);
+            if (!string.IsNullOrEmpty(solicitacao.OperadorId))
+                solicitacao.Operador = _context.Usuario.Find(solicitacao.OperadorId);
+            if (!string.IsNullOrEmpty(solicitacao.EncaminhadoId))
+                solicitacao.Encaminhado = _context.Usuario.Find(solicitacao.EncaminhadoId);
+
             if (solicitacao == null)
             {
                 return NotFound();
@@ -151,11 +158,9 @@ namespace engie_dashboard.Controllers
         }
 
         // POST: Solicitacaos/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,TipoSolicitacao,Usina,UG,HoraSolicitacao,Valor,UnidadeMedida,OperadorId,VerificadorId,EncaminhadoId,StatusSolicitacao,EstadoOperacional")] Solicitacao solicitacao)
+        public async Task<IActionResult> Edit(string id, Solicitacao solicitacao)
         {
             if (id != solicitacao.Id)
             {
@@ -217,6 +222,17 @@ namespace engie_dashboard.Controllers
         private bool SolicitacaoExists(string id)
         {
             return _context.Solicitacao.Any(e => e.Id == id);
+        }
+
+        // GET: Historico
+        public IActionResult Historico(string id)
+        {
+            var historicos = _context.HistoricoSolicitacao.Where(x => x.SolicitacaoId.Equals(id)).ToList();
+            foreach (var item in historicos)
+            {
+                item.Usuario = _context.Usuario.Find(item.UsuarioId);
+            }
+            return View(historicos.OrderByDescending(x => x.HoraModificacao));
         }
     }
 }

@@ -37,7 +37,6 @@
     <div class="col-md-3">
         <button id="btnSearch" type="submit" class="btn btn-primary" style="float: right;margin-top: 11%;">
             Buscar
-
         </button>
     </div>
 </div>
@@ -83,7 +82,7 @@
                            title="Detalhes">
                             <i class="fa fa-info-circle" aria-hidden="true"></i>
                         </a>
-                        <a href="@Url.Action("Editar", "Solicitacoes", new { id = item.Id.Trim() })" class="btn btn-default" style="height:auto;margin-top:auto;"
+                        <a href="@Url.Action("Edit", "Solicitacoes", new { id = item.Id.Trim() })" class="btn btn-default" style="height:auto;margin-top:auto;"
                            title="Editar">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
