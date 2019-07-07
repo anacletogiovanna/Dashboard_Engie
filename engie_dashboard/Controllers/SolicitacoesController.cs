@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using engie_dashboard.Models;
-using Framework.CrossCutting.Tools.Enum;
 
 namespace engie_dashboard.Controllers
 {
@@ -82,11 +81,11 @@ namespace engie_dashboard.Controllers
                 idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
             
             var teste = User.Identity.Name;
-            ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            ViewBag.EstadoOperacional = EnumHelper.ToList<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
-            ViewBag.ComandoDePotencia = EnumHelper.ToList<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            ViewBag.TipoDePotencia = EnumHelper.ToList<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            //ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            //ViewBag.EstadoOperacional = EnumHelper.ToList<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            //ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
+            //ViewBag.ComandoDePotencia = EnumHelper.ToList<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
+            //ViewBag.TipoDePotencia = EnumHelper.ToList<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
 
             return View();
         }

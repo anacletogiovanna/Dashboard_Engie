@@ -15,11 +15,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Reference Include="Framerowk.CrossCutting.Tools">
-      <HintPath>Framerowk.CrossCutting.Tools.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>

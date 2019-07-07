@@ -2,8 +2,7 @@
     $.get('Home/GraphTypes').done(function (solicitacoes) {
         //transform in json 
         $(solicitacoes).each(function (item) {
-            var json = json + "{" + solicitacoes[item] + ":" + solicitacoes[0] + "}";
-            console.log(json);
+            console.log("{" + solicitacoes[item] + ":" + solicitacoes[0] +  "}");
         });
 
         console.log(solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1]);
@@ -27,6 +26,7 @@
             options: {
                 
             }
+
         });
 
         //iterando sobre os dados que eu pego 
