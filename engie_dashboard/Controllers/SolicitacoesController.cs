@@ -97,22 +97,6 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos/Create
         public IActionResult Create()
         {
-
-            //var UsuarioLogado = User.Identity.Name.Split("@")[0];
-            string idCl;
-            //if (UsuarioLogado.Equals("Pedro"))
-            //    idCl = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
-            //else
-            //    idCl = "C004750C-B424-4CC3-80F6-34F3ED52860C";
-            
-            var teste = User.Identity.Name;
-            //ViewBag.TipoSolicitacao = EnumHelper.ToList<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.EstadoOperacional = EnumHelper.ToList<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.Usuarios = _context.Usuario.ToList().Where(x => !x.NomeCompleto.Contains(UsuarioLogado)).Select(x => new SelectListItem { Text = x.NomeCompleto + " ("+ x.Empresa +")", Value = x.Id }) ;
-            //ViewBag.ComandoDePotencia = EnumHelper.ToList<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-            //ViewBag.TipoDePotencia = EnumHelper.ToList<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.Value, Value = x.Key });
-
-
             return View();
         }
 
@@ -123,15 +107,28 @@ namespace engie_dashboard.Controllers
         {
             if (ModelState.IsValid)
             {
-                solicitacao.Id = Guid.NewGuid().ToString();
+                //solicitacao.Id = Guid.NewGuid().ToString();
                 solicitacao.Data = DateTime.Now;
                 var UsuarioLogado = User.Identity.Name.Split("@")[0];
                 if (UsuarioLogado.Equals("Pedro"))
                     solicitacao.SolicitanteId = "AF5D235F-AA87-4550-9C50-1C1D714861F2";
                 else
                     solicitacao.SolicitanteId = "C004750C-B424-4CC3-80F6-34F3ED52860C";
+
+                var historico = new HistoricoSolicitacao();
+                historico.SolicitacaoId = solicitacao.Id;
+                historico.StatusSolicitacao = solicitacao.StatusSolicitacao;
+                historico.UsuarioId = solicitacao.SolicitanteId;
+                historico.Usuario = solicitacao.Solicitante;
+                historico.HoraModificacao = solicitacao.Data;
+                historico.Comando = solicitacao.TipoSolicitacao.ToString();
+
                 _context.Add(solicitacao);
-                 _context.SaveChanges();
+                _context.SaveChanges();
+
+                _context.Add(historico);
+                _context.SaveChanges();
+
                 return RedirectToAction(nameof(Index));
             }
             return View("Index");
