@@ -1,80 +1,47 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-// Write your JavaScript code.
+﻿$(function () {
+    $.get('Home/GraphTypes').done(function (solicitacoes) {
+        //transform in json 
+        $(solicitacoes).each(function (item) {
+            var json = json + "{" + solicitacoes[item] + ":" + solicitacoes[0] + "}";
+            console.log(json);
+        });
 
-//var ctx = document.getElementById('solicitacoesChart').getContext('2d');
-//var chart = new Chart(ctx, {
-//    // The type of chart we want to create
-//    type: 'pie',
+        console.log(solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1]);
+        var count_label = 0;
+        var count_values = 0;
+        var ctx = document.getElementById('tipoSolicitacao').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'pie',
+            // The data for our dataset
+            data: {
+                datasets: [{
+                    backgroundColor: ['rgb(255, 73, 92)', 'rgb(57, 147, 221)', 'rgb(61, 220, 151)', 'rgb(255, 73, 92)' ],
+                    data:[
+                        solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1]
+                    ]
+                }]
+            },
 
-//    // The data for our dataset
-//    data: { 
-//        datasets: [{
-//            backgroundColor: [
-//                'rgb(255, 99, 132)',
-//                'rgb(205, 19, 162)',
-//                'rgb(155, 99, 232)'
-//            ],
-            
-//            data: [0, 10, 5, 2, 20, 30, 45]
-//        }],
-//        labels: [
-//            'Red', 
-//            'Yellow', 
-//            'Blue'
-//        ]
-//    },
+            // Configuration options go here
+            options: {
+                
+            }
+        });
 
-//    // Configuration options go here
-//    options: {}
-//});
-
-var ctx = document.getElementById('tipoSolicitacao').getContext('2d');
-var chart = new Chart(ctx, {
-    // The type of chart we want to create
-    type: 'pie',
-
-    // The data for our dataset
-    data: {
-        datasets: [{
-            label: 'My First dataset',
-            backgroundColor: ['rgb(254, 72, 72)', 'rgb(255, 256, 288)', 'rgb(255, 256, 288)'],
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45]
-        }]
-    },
-
-    // Configuration options go here
-    options: {}
+        //iterando sobre os dados que eu pego 
+        
+    });
 });
-
-//var myLineChart = new Chart(ctx, {
-//    type: 'line',
-//    data: [{
-//        x: 10,
-//        y: 20
-//    }, {
-//        x: 15,
-//        y: 10
-//        }],
-
-//    options: {
-//        scales: {
-//            yAxes: [{
-//                stacked: true
-//            }]
-//        }
-//    }
-//});
 
 var ctx = document.getElementById('myChart').getContext("2d");
 
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: ["06:01:00", "06:02:30", "06:03:00", "06:05:50", "06:06:10", "06:07:00", "06:09:00"],
+        labels: ["06:00:12", "06:02:00", "06:03:10", "06:04:12", "06:05:06", "06:07:10", "06:08:20"],
         datasets: [{
-            label: "Solicitações",
+            label: "Data",
             borderColor: "#80b6f4",
             pointBorderColor: "#80b6f4",
             pointBackgroundColor: "#80b6f4",
@@ -86,7 +53,7 @@ var myChart = new Chart(ctx, {
             pointRadius: 3,
             fill: false,
             borderWidth: 4,
-            data: [10, 13, 6, 18, 77, 2, 10]
+            data: [20, 10, 50, 77, 90, 20, 10]
         }]
     },
     options: {
@@ -120,4 +87,8 @@ var myChart = new Chart(ctx, {
             }]
         }
     }
+});
+
+$('.menu-toggle').on('click', function () {
+    $('body').toggleClass('menu-open');
 });

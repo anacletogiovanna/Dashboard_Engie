@@ -9,11 +9,11 @@ using engie_dashboard.Models;
 
 namespace engie_dashboard.Controllers
 {
-    public class SolicitacaosController : Controller
+    public class SolicitacoesController : Controller
     {
         private readonly ModelContext _context;
 
-        public SolicitacaosController(ModelContext context)
+        public SolicitacoesController(ModelContext context)
         {
             _context = context;
         }
@@ -21,9 +21,25 @@ namespace engie_dashboard.Controllers
         // GET: Solicitacaos
         public async Task<IActionResult> Index()
         {
-            var solicitacoes = _context.Solicitacao.Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1)).ToListAsync();
+            var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToListAsync();
             return View(await solicitacoes);
         }
+
+        // GET: Solicitacaos
+        public IActionResult Dashboard()
+        {
+            var solicitacoes = _context.Solicitacao.Where(x => x.Data >= DateTime.Now.Date.AddDays(-1)).ToList();
+            foreach (var item in solicitacoes)
+            {
+                item.Solicitante = _context.Usuario.Find(item.SolicitanteId);
+                if (string.IsNullOrEmpty(item.OperadorId))
+                    item.Operador = _context.Usuario.Find(item.OperadorId);
+                if (string.IsNullOrEmpty(item.EncaminhadoId))
+                    item.Encaminhado = _context.Usuario.Find(item.EncaminhadoId);
+            }
+            return View(solicitacoes);
+        }
+
         // GET: Solicitacaos/Details/5
         public async Task<IActionResult> Details(string id)
         {

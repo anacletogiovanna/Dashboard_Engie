@@ -1,0 +1,56 @@
+﻿@model IEnumerable<engie_dashboard.Models.Solicitacao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Ocorrências nas Últimas 24hs</h3>
+
+<div class="row float-right" style="padding-top:45px; margin-right:3px">
+    Número de ocorrências(s): @Model.Count()
+</div>
+<div class="clearfix"></div>
+
+<div class="row" style="padding-top:5px">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr style="text-align:center;">
+                    <th>Data</th>
+                    <th>Usina</th>
+                    <th>UG</th>
+                    <th>Tipo Solicitação</th>
+                    <th>Solicitante</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr style="text-align:center;">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Data)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Usina)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UG)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoSolicitacao)
+                    </td>
+                    <td>
+                        @item.Solicitante.NomeCompleto (@item.Solicitante.Empresa)
+                    </td>
+                    <td style="background-color:red">
+                        @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+</div>

@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using engie_dashboard.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace engie_dashboard.Controllers
 {
@@ -33,7 +32,10 @@ namespace engie_dashboard.Controllers
         public JsonResult GraphTypes()
         {
 
-            var solicitacoes = _context.Solicitacao.ToList().Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1));
+
+            //var solicitacoes = _context.Solicitacao.ToList().Where(x => x.HoraSolicitacao >= DateTime.Now.Date.AddDays(-1));
+
+            var solicitacoes = _context.Solicitacao.ToList().Where(x => x.Data >= DateTime.Now.Date.AddDays(-1));
 
             var countSolicitado = solicitacoes.Count(x => x.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado));
 
