@@ -1,16 +1,116 @@
-﻿@{
+﻿@model IEnumerable<engie_dashboard.Models.Solicitacao>
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-<script src="~/js/site.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
 
 <div class="text-center">
     <h1 class="display-4">Dashboard BI</h1>
-  
-    <div class="row" style="margin-top:10%;">
-        <canvas id="solicitacoesChart" class="solicitacoesChart"></canvas>
+
+    <div class="row" style="margin-top:5%;">
+        <div class="col">
+            <h4>Solicitações - 24 hrs</h4>
+        </div>
+        <div class="col">
+            <h4>Tipos de Solicitações</h4>
+        </div>
+    </div>
+    <div class="row" id="trendChart" style="margin-top:6%;">
+        <canvas id="myChart" class="myChart"></canvas>
         <canvas id="tipoSolicitacao" class="tipoSolicitacao"></canvas>
     </div>
-    
+
+
+    <div class="row" style="margin-top:5%;>
+        <div class="col"></div>
+        <div class="col">
+            <h4>Últimas Solicitação</h4>
+        </div>
+        <div class="col"></div>
+
+    </div>
+    <div class="row" id="trendChart" style="margin-top:3%;">
+
+        <table class="table table-borderless ">
+            <thead>
+                <tr style="text-align:center;">
+                    <th scope="col">
+                        @*@Html.DisplayNameFor(model => model.TipoSolicitacao)*@
+                        Data
+                    </th>
+                    <th scope="col">
+                        Usina
+                    </th>
+                    <th scope="col">
+                        Valor
+                    </th>
+                    <th scope="col">
+                        Unidade
+                    </th>
+                    <th scope="col">
+                        Status
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr style="text-align:center;">
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Data)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usina)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Valor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UnidadeMedida)
+                        </td>
+
+                        @if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Solicitado))
+                        {
+                            <td style="color:cornflowerblue;">
+                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                            </td>
+                        }
+                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Encaminhado))
+                        {
+                            <td style="color:deepskyblue;">
+                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                            </td>
+                        }
+                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Executado))
+                        {
+                            <td style="color:yellow;">
+                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                            </td>
+                        }
+                        else if (item.StatusSolicitacao.Equals(StatusSolicitacaoEnum.Confirmado))
+                        {
+                            <td style="color:lightgreen;">
+                                @Html.DisplayFor(modelItem => item.StatusSolicitacao)
+                            </td>
+                        }
+
+
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+
+
 </div>
+
+

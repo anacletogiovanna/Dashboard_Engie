@@ -44,7 +44,7 @@ namespace engie_dashboard
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var connection = @"Data Source=DESKTOP-C6OE3HS\SQLEXPRESS;Initial Catalog=dashboard_engie;Integrated Security=True"; //variavel com url de conexao 
+            var connection = @"Data Source=localhost\SQLEXPRESS;Initial Catalog=dashboard_engie;Integrated Security=True"; //variavel com url de conexao 
 
             services.AddDbContext<ModelContext>(options => options.UseSqlServer(connection)); //adicionando a variavel de conexao para o sqlServer
         }
