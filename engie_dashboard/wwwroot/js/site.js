@@ -18,7 +18,7 @@
                 ],
 
                 datasets: [{
-                    backgroundColor: ['rgb(255, 73, 92)', 'rgb(57, 147, 221)', 'rgb(61, 220, 151)', 'rgb(255, 73, 92)' ],
+                    backgroundColor: ['rgb(255, 73, 92)', 'rgb(57, 147, 221)', 'rgb(61, 220, 151)', 'rgb(255, 73, 92)', 'rgb(56, 73, 92)'  ],
                     data:[
                         solicitacoes[0][1], solicitacoes[1][1], solicitacoes[2][1], solicitacoes[3][1], solicitacoes[4][1]
                     ]
