@@ -1,8 +1,28 @@
-﻿@{
+﻿@model IEnumerable<engie_dashboard.Models.Solicitacao>
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+
 <div class="text-center">
     <h1 class="display-4">Dashboard BI</h1>
-    <p>Graph Example, maybe...</p>
+
+    <div class="row" style="margin-top:5%;">
+        <div class="col">
+            <h4>Solicitações - 24 hrs(Por Usina)</h4>
+        </div>
+        <div class="col">
+            <h4>Tipos de Solicitações</h4>
+        </div>
+    </div>
+    <div class="row" id="trendChart" style="margin-top:5%;">
+        <canvas id="myChart" class="myChart"></canvas>
+        <canvas id="tipoSolicitacao" class="tipoSolicitacao"></canvas>
+    </div>
 </div>
+
+

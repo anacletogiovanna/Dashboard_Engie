@@ -54,3 +54,23 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.solicitacoesChart{
+    height:50%!important;
+    width:50%!important;
+    float:left;
+}
+
+.tipoSolicitacao {
+    height: 50% !important;
+    width: 50% !important;
+    float: right;
+}
+
+.myChart {
+    display: block;
+    height: 50%!important;
+    width: 50%!important;
+}
+
+

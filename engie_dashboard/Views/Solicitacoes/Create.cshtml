@@ -1,0 +1,268 @@
+﻿@model engie_dashboard.Models.Solicitacao
+
+@{
+    ViewData["Title"] = "Abrir Solicitação";
+
+    IList<SelectListItem> listEstadoOperacionalEnum = Enum.GetValues(typeof(EstadoOperacionalEnum)).Cast<EstadoOperacionalEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+    IList<SelectListItem> listTipoSolicitacaoEnum = Enum.GetValues(typeof(TipoSolicitacaoEnum)).Cast<TipoSolicitacaoEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+    IList<SelectListItem> listComandoDePotenciaEnum = Enum.GetValues(typeof(ComandoDePotenciaEnum)).Cast<ComandoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+    IList<SelectListItem> listTipoDePotenciaEnum = Enum.GetValues(typeof(TipoDePotenciaEnum)).Cast<TipoDePotenciaEnum>().Select(x => new SelectListItem { Text = x.ToString(), Value = ((int)x).ToString() }).ToList();
+
+}
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#TipoSolicitacao").on("change", function () {
+            var tipo = $("#TipoSolicitacao").val();
+            if (tipo === "0") {
+                $('#divEstadoOperacional').val('').show();
+                $('#divPrecipitacao').val('').hide();
+                $('#divChuva').val('').hide();
+                $('#divNivelDeReservatorio').val('').hide();
+                $('#divVazaoAfluente').val('').hide();
+                $('#divVazaoVertida').val('').hide();
+                $('#divVazaoTurbinada').val('').hide();
+                $('#divVazaoDefluente').val('').hide();
+                $('#divComandoDePotencia').val('').hide();
+                $('#divTipoDePotencia').val('').hide();
+                $('#divValor').val('').hide();
+                $('#divUnidadeMedida').val('').hide();
+            }
+            else if (tipo === "1") {
+                $('#divEstadoOperacional').val('').hide();
+                $('#divPrecipitacao').val('').hide();
+                $('#divChuva').val('').hide();
+                $('#divNivelDeReservatorio').val('').hide();
+                $('#divVazaoAfluente').val('').hide();
+                $('#divVazaoVertida').val('').hide();
+                $('#divVazaoTurbinada').val('').hide();
+                $('#divVazaoDefluente').val('').hide();
+                $('#divComandoDePotencia').val('').show();
+                $('#divTipoDePotencia').val('').show();
+                $('#divValor').val('').show();
+                $('#divUnidadeMedida').val('').show();
+            }
+            else if (tipo === "2") {
+                $('#divEstadoOperacional').val('').hide();
+                $('#divComandoDePotencia').val('').hide();
+                $('#divTipoDePotencia').val('').hide();
+                $('#divValor').val('').hide();
+                $('#divUnidadeMedida').val('').hide();
+                $('#divPrecipitacao').val('').show();
+                $('#divChuva').val('').show();
+                $('#divNivelDeReservatorio').val('').show();
+                $('#divVazaoAfluente').val('').show();
+                $('#divVazaoVertida').val('').show();
+                $('#divVazaoTurbinada').val('').show();
+                $('#divVazaoDefluente').val('').show();
+            }
+        });
+    });
+</script>
+
+<h4>Abrir Solicitação</h4>
+<hr />
+
+<form asp-action="Create">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Tipo de Solicitação:</label>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.MudancaEstado, true)
+                        Mudança de Estado
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.ComandosTensaoPotencia, true)
+                        Tensão/Potência
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.TipoSolicitacao, TipoSolicitacaoEnum.Hidrologia, true)
+                        Hidrologia
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="divStatusSolicitacao" class="col-md-6">
+            <label>Status da Solicitação:</label>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Solicitado, false)
+                        Solicitado
+                    </label>
+
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.StatusSolicitacao, StatusSolicitacaoEnum.Informado, false)
+                        Informado
+                    </label>
+                </div>
+            </div>
+        </div>
+
+       
+
+    </div>
+
+
+    <div class="row">
+
+        <div id="divComandoDePotencia" class="col-md-6">
+            <label>Comando de Potencia:</label>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.ComandoDePotencia, ComandoDePotenciaEnum.Aumentar, false)
+                        Aumentar
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.ComandoDePotencia, ComandoDePotenciaEnum.Diminuir, false)
+                        Diminuir
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="divTipoDePotencia" class="col-md-6">
+            <label>Tipo de Potencia:</label>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.TipoDePotencia, TipoDePotenciaEnum.Tensao, false)
+                        Tensão
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.TipoDePotencia, TipoDePotenciaEnum.Potencia, false)
+                        Potência
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div id="divEstadoOperacional" class="col-md-12">
+            <label>Estado Operacional:</label>
+            <div class="form-group">
+                <div class="radio-inline">
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DCS, true)
+                        DCS
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DGN, false)
+                        DGN
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DGT, false)
+                        DGT
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DP, false)
+                        DP
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DPCQ, false)
+                        DPCQ
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.DPTQ, false)
+                        DPTQ
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IGP, false)
+                        IGP
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IPI, false)
+                        IPI
+                    </label>
+                    <label class="btn btn-primary active">
+                        @Html.RadioButtonFor(m => m.EstadoOperacional, EstadoOperacionalEnum.IPP, false)
+                        IPP
+                    </label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Usina" class="control-label"></label>
+                <input asp-for="Usina" class="form-control" />
+                <span asp-validation-for="Usina" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="UG" class="control-label"></label>
+                <input asp-for="UG" class="form-control" />
+                <span asp-validation-for="UG" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="divNivelDeReservatorio" class="form-group">
+                <label>Nível de Reservatório</label>
+                <input type="number" asp-for="NivelDeReservatorio" class="form-control" />
+                <span asp-validation-for="NivelDeReservatorio" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoAfluente" class="form-group">
+                <label>Vazão Afluente</label>
+                <input type="number" asp-for="VazaoAfluente" class="form-control" />
+                <span asp-validation-for="VazaoAfluente" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="divVazaoVertida" class="form-group">
+                <label>Vazão Vertida</label>
+                <input type="number" asp-for="VazaoVertida" class="form-control" />
+                <span asp-validation-for="VazaoVertida" class="text-danger"></span>
+            </div>
+
+            <div id="divVazaoTurbinada" class="form-group">
+                <label>Vazão Turbinada</label>
+                <input type="number" asp-for="VazaoTurbinada" class="form-control" />
+                <span asp-validation-for="VazaoTurbinada" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div id="divVazaoDefluente" class="form-group">
+                <label>Vazão Defluente</label>
+                <input type="number" asp-for="VazaoDefluente" class="form-control" />
+                <span asp-validation-for="VazaoDefluente" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+
+            <div class="form-group">
+                <input type="submit" value="Registrar" class="btn btn-primary float-right" />
+            </div>
+        </div>
+    </form>
+
+<div class="col-md-3">
+    <a class="btn btn-primary" style="margin-top: 11%;" asp-action="Index"> < Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
