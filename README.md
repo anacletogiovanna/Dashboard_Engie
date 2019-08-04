@@ -14,7 +14,7 @@ MVP elaborado no 'Radix Hackathon 2019'
 ## Equipe
 
 - André Araújo - DEV 
-(https://www.linkedin.com/in/andre-araujo-2393b0141)
+(https://www.linkedin.com/in/andre-alves-araujo)
 - Camila Barbosa - BUSINESS 
 (https://www.linkedin.com/in/camilabga)
 - Elizabeth Carvalho - DEV 
